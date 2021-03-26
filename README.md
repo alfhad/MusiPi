@@ -5,7 +5,7 @@ In the directory on level of manage.py<br>
 <code>python manage.py runserver</code>
 
 <hr>
-###### Admin Credentials:
+#### Admin Credentials:
 ###### `GET /admin/` credentials: `admin` and `root`. 
 <hr>
 
