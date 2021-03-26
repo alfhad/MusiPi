@@ -5,8 +5,14 @@ In the directory on level of manage.py<br>
 <code>python manage.py runserver</code>
 
 <hr>
-#### Admin Credentials:
-###### `GET /admin/` credentials: `admin` and `root`. 
+
+###### `GET /admin/`. 
+
+#### Admin credentials:
+username: admin<br>
+password: root<br>
+
+
 <hr>
 
 <i>You may directly use Chrome by hitting  the URL to perform the above CRUD by the default UI of DRF.</i>
