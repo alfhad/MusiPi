@@ -20,7 +20,7 @@ class AddAFile(APIView):
 
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         elif filetype.lower() == 'podcast':
@@ -28,7 +28,7 @@ class AddAFile(APIView):
 
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         elif filetype.lower() == 'audiobook':
@@ -36,7 +36,7 @@ class AddAFile(APIView):
 
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         else:
@@ -55,7 +55,7 @@ class SongApiView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -65,7 +65,7 @@ class SongDetails(APIView):
         try:
             return Song.objects.get(id=id)
         except Song.DoesNotExist:
-            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+            return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request, id):
         song = self.get_object(id)
@@ -77,13 +77,13 @@ class SongDetails(APIView):
         serializer = SongSerializer(song, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
         song = self.get_object(id)
         song.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_200_OK)
 
 
 class PodcastApiView(APIView):
@@ -98,7 +98,7 @@ class PodcastApiView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -108,7 +108,7 @@ class PodcastDetails(APIView):
         try:
             return Podcast.objects.filter(id=id)[0]
         except Podcast.DoesNotExist:
-            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+            return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request, id):
         podcast = self.get_object(id)
@@ -120,13 +120,13 @@ class PodcastDetails(APIView):
         serializer = PodcastSerializer(podcast, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
         podcast = self.get_object(id)
         podcast.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_200_OK)
 
 
 class AudioBookApiView(APIView):
@@ -141,7 +141,7 @@ class AudioBookApiView(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -151,22 +151,22 @@ class AudioBookDetails(APIView):
         try:
             return AudioBook.objects.get(id=id)
         except AudioBook.DoesNotExist:
-            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+            return HttpResponse(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request, id):
         adb = self.get_object(id)
         serializer = AudioBookSerializer(adb)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, id):
         adb = self.get_object(id)
         serializer = AudioBookSerializer(adb, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
         adb = self.get_object(id)
         adb.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_200_OK)
