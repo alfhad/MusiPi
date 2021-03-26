@@ -8,10 +8,6 @@ In the directory on level of manage.py<br>
 
 <hr>
 
-## API End-Points:
-
-<hr>
-
 ###### `GET /admin/` credentials: `admin` and `root`. 
 <hr>
 
